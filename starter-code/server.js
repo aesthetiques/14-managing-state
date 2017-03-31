@@ -8,7 +8,7 @@ const requestProxy = require('express-request-proxy'); // REVIEW: We've added a 
 const PORT = process.env.PORT || 3000;
 const app = express();
 // const conString = 'postgres://USERNAME:PASSWORD@HOST:PORT';
-const conString = ''; // TODO: Don't forget to set your own conString
+const conString = 'fc3a423485310d939e43237449a21ba7620084aa'; // TODO: Don't forget to set your own conString
 const client = new pg.Client(conString);
 client.connect();
 client.on('error', function(error) {
@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('./public'));
 
 // COMMENT: What is this function doing? Why do we need it? Where does it receive a request from?
-// (put your response in a comment here)
+// (This uses the express-request-proxy to hide our token when it's being requested, it calls requestProxy, which handles the request and response. It receives request from the route defined with an app.get route below: for /github/*)
 function proxyGitHub(request, response) {
   console.log('Routing GitHub request for', request.params[0]);
   (requestProxy({
@@ -35,7 +35,7 @@ app.get('/new', (request, response) => response.sendFile('new.html', {root: '.'}
 app.get('/github/*', proxyGitHub);
 
 // COMMENT: What is this route doing? Where does it receive a request from?
-// (put your response in a comment here)
+// ((request from /articles/find) this route selects all articles and inner joins it with authors sends the response to result.rows, and catches any errors and logs them)
 app.get('/articles/find', (request, response) => {
   let sql = `SELECT * FROM articles
             INNER JOIN authors
@@ -48,7 +48,7 @@ app.get('/articles/find', (request, response) => {
 })
 
 // COMMENT: What is this route doing? Where does it receive a request from?
-// (put your response in a comment here)
+// (This route handles a query to select categories and receives a request from the url ‘/categories’ sends the response to the result.rows, catches any errors and logs them)
 app.get('/categories', (request, response) => {
   client.query(`SELECT DISTINCT category FROM articles;`)
   .then(result => response.send(result.rows))
@@ -92,7 +92,7 @@ app.post('/articles', (request, response) => {
 });
 
 // COMMENT: What is this route doing? Where does it receive a request from?
-// (put your response in a comment here)
+// (whenever the request comes from /articles/:id, it updates the details of the currently selected author, as represented by the :id part of the URL)
 app.put('/articles/:id', (request, response) => {
   client.query(`
     UPDATE authors

@@ -12,4 +12,5 @@ page('/author/:authorName', articleController.loadByAuthor, articleController.in
 page('/category/:categoryName', articleController.loadByCategory, articleController.index);
 
 // COMMENT: What is this function doing?
+//it's calling page() to make the rest of these routes work.
 page();

@@ -4,6 +4,7 @@
   const articleView = {};
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+  //this is compiling the handlebars template text, adds a published on date, says how many days ago it was published, and invokes marked, returns all the data in the template
   const render = function(article) {
     let template = Handlebars.compile($('#article-template').text());
 

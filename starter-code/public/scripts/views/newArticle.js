@@ -2,6 +2,7 @@
   const newArticle = {};
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+  //this makes the new article page, hides the index page, and shows the form, on change, it creates the article json info in real time. it calls newArticle.create. this lives below the current function.
   newArticle.initNewArticlePage = function() {
     $('.tab-content').show();
     $('#export-field').hide();

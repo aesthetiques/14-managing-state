@@ -4,6 +4,7 @@
   const articleController = {};
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+  //(thiis is called in routes.js when the URL is just the '/', and it calles articleView.index)
   articleController.index = (ctx) => articleView.index(ctx.articles);
 
   // REVIEW: Middleware for grabbing one article by ID:
@@ -14,6 +15,7 @@
     };
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+  //This is located in article.js, and being called here. It's an ajax call for the ctx/context, aka a specific article.
     Article.findWhere('article_id', ctx.params.article_id, articleData);
   };
 

@@ -19,12 +19,14 @@
   // };
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+  // this is sorting by date, and creating all of the articles witha  constructor. loadAll is called in Article.fetchAll
   Article.loadAll = rows => {
     rows.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)));
     Article.all = rows.map(ele => new Article(ele));
   };
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+  //When the ajax requests /articles, it's making a request for all of the data from the database, and passes the data into Article.loadAll as arguments.
   Article.fetchAll = callback => {
     $.get('/articles')
     .then(
@@ -60,6 +62,7 @@
   };
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+  //This function gets called in adminView.js and it returns the total number of words sorted by author. It uses regex to search the body of the articles and uses the .reduce method to add the numbers into a single number
   Article.numWordsByAuthor = () => {
     return Article.allAuthors().map(author => {
       return {
@@ -80,7 +83,9 @@
   };
 
 
-    // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?Article.truncateTable = callback => {
+    // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+    //This deletes all articles info on the data, just leaves the table behind.
+  Article.truncateTable = callback => {
     $.ajax({
       url: '/articles',
       method: 'DELETE',
